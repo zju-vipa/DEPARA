@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import math
-
 import torch.nn as nn
 import torch
 import torch.nn.init as init
@@ -28,8 +27,6 @@ class VGG(nn.Module):
             nn.Linear(4096, num_class),
             nn.Softmax(dim=1),
         )
-        #self.softmax = nn.Softmax(dim=1)
-        # Initialize weights
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
@@ -40,14 +37,11 @@ class VGG(nn.Module):
         x = self.features(x)
         x = x.view(x.size(0), -1)
         x = self.classifier(x)
-        #x = self.softmax(x)
         return x
 
     def model_fit(self, x_pred, x_output, device, num_output):
-        # convert a single label into a one-hot vector
         x_output_onehot = torch.zeros((len(x_output), num_output)).to(device)
         x_output_onehot.scatter_(1, x_output.unsqueeze(1), 1)
-        # apply cross-entropy loss
         loss = x_output_onehot * torch.log(x_pred + 1e-20)
         return torch.sum(-loss, dim=1)
 

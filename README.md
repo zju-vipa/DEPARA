@@ -132,7 +132,7 @@ python shrink.py --data-dir syn2real-data --save-dir syn2real-data-hundredth --s
 
 #### Training
 
-We first train some baselines in each domain only. Baseline(Domain Synthetic):
+We first train some baselines in each domain. Baseline(Domain Synthetic):
 
 ```
 cd $DIR/tools
