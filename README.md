@@ -101,7 +101,7 @@ python plot.py --dataset taskonomy
 
 e.g.
 
-<img src="fig/pr.png" style="zoom:50%;" />
+<img src="fig/pr.png" style="zoom:25%;" />
 
 Plot *Task Similarity Tree* of DEPARA:
 
@@ -111,7 +111,7 @@ matlab -nosplash -nodesktop task_similarity_tree.m
 
 e.g.
 
-<img src="fig/tree.png" style="zoom:46%;" />
+<img src="fig/tree.png" style="zoom:25%;" />
 
 ## Layer Selection
 
