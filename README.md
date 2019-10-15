@@ -170,14 +170,14 @@ python vgg_layer_transfer.py --data-dir syn2real-data-hundredth --source Imagene
 Extract DEPARA from finetuned models(last layer and other conv-layers) with randomly selected 200 images from *part test*:
 
 ```
-python feature_extract_vgg.py --target --imlist imlist_200.txt
-python feature_extract_vgg.py --imlist imlist_200.txt
+python vgg_extract.py --target --imlist imlist_200.txt
+python vgg_extract.py --imlist imlist_200.txt
 ```
 
 Test performance w.r.t. each layer:
 
 ```
-python layer_spearman.py
+python layer_select.py
 ```
 
 ## Todo
