@@ -180,6 +180,8 @@ Test performance w.r.t. each layer:
 python layer_select.py
 ```
 
+![](fig/layer.png)
+
 ## Todo
 
 Test more network architectures and tasks, on which we test performance of DEPARA.
