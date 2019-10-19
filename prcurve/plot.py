@@ -140,7 +140,9 @@ affinity_edge_node = affinity[1]/1000. + args.lamda * affinity_edge
 affinity_edge_node_coco = affinity_coco[1]/1000. + args.lamda_coco * affinity_edge_coco
 affinity_edge_node_indoor = affinity_indoor[1]/1000. + args.lamda_indoor * affinity_edge_indoor
 
-scipy.io.savemat('./affinity_depara.mat', {'affinity_depara': affinity_edge_node})
+scipy.io.savemat('./affinity_depara.mat', {'affinity_depara': affinity_edge_node, 
+                                           'affinity_depara_coco': affinity_edge_node_coco,
+                                           'affinity_depara_indoor': affinity_edge_node_indoor})
 pr_dict['edge+node_taskonomy'] = pr_list(affinity_edge_node, affinity_gt_rel)
 pr_dict['edge+node_coco'] = pr_list(affinity_edge_node_coco, affinity_gt_rel)
 pr_dict['edge+node_indoor'] = pr_list(affinity_edge_node_indoor, affinity_gt_rel)

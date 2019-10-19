@@ -19,7 +19,7 @@ parser.set_defaults(source='syn')
 
 args = parser.parse_args()
 
-prj_dir = os.path.dirname(os.path.dirname(os.path.basename(__file__)))
+prj_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 feature_dir = os.path.join(prj_dir, args.feature_dir)
 result_save = os.path.join(prj_dir, args.result_save)
 '''

@@ -26,10 +26,10 @@ elif args.part == 'mscoco':
 else:
     raise IOError('No such part in dataset syn2real')
 
-if not os.path.exists(os.path.join(prj_dir, args.split_path)):
-    os.mkdir(os.path.join(prj_dir, args.split_path))
+
 split_dir = os.path.join(prj_dir, args.split_path)
-os.chdir(split_dir)
+if not os.path.exists(split_dir):
+    os.mkdir(split_dir)
 
 category = ['aeroplane', 'bicycle', 'bus', 'car', 'horse', 'knife', 'motorcycle', 'person', 'plant', 'skateboard', 'train', 'truck']
 

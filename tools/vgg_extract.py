@@ -154,7 +154,7 @@ if __name__ == '__main__':
     imgs = None
     for i in range(200):
         print(i, ' image')
-        img = Image.open(os.path.join(data_dir, 'test200', img_list[i])).convert('RGB')
+        img = Image.open(os.path.join(data_dir, 'test', img_list[i])).convert('RGB')
         if imgs is None:
             imgs = data_transform(img)
         else:
