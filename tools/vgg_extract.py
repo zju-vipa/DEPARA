@@ -45,6 +45,9 @@ prj_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 save_dir = os.path.join(prj_dir, args.save_dir)
 data_dir = os.path.join(prj_dir, args.data_dir)
 
+if not os.path.exists(save_dir):
+    os.mkdir(save_dir)
+
 class FeatureExtractor(nn.Module):
 
     def __init__(self, submodule, extracted_layers):
