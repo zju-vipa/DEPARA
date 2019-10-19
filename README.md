@@ -78,7 +78,7 @@ After splitting, the datasets should be arranged in the following format:
 |   |   |   |---...
 ```
 
-## Task transferability
+## Task Transferability
 
 We test Task Transferability on Taskonomy Models. For pre-trained models, testing images, please follow the instruction of [TransferabilityfromAttributionMaps](https://github.com/zju-vipa/TransferbilityFromAttributionMaps). Make sure to utilize those codes to generate each task's features and attribution maps. We also provide ready-made features in [GoogleDrive](https://drive.google.com/open?id=1lYJnVOb8GBZuMBePf50BTcQJoaGL5o_y).
 
