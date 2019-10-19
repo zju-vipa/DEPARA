@@ -113,7 +113,7 @@ e.g.
 
 <img src="fig/tree.png" style="zoom:25%;" />
 
-## Layer Selection
+## Layer Transferability
 
 #### Dataset Shrinkage
 
