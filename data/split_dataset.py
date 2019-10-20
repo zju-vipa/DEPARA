@@ -21,7 +21,7 @@ if args.part == 'synthetic':
     data_origin = os.path.join(prj_dir, args.data_dir, 'train')
     file_extension = '.png'
 elif args.part == 'mscoco':
-    data_origin = os.path.join(prj_dir, args.data_dir, 'val')
+    data_origin = os.path.join(prj_dir, args.data_dir, 'validation')
     file_extension = '.jpg'
 else:
     raise IOError('No such part in dataset syn2real')
@@ -54,7 +54,7 @@ for i in range(len(category)):
     train_num = int(img_num * 0.7)
     val_num = int(img_num * 0.2)
     test_num = img_num - (train_num + val_num)
-    print(category[i], ' : ', img_num)
+    print(category[i], ':', img_num)
     train_all += train_num
     val_all += val_num
     test_all += test_num

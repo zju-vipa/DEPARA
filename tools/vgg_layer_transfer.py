@@ -69,7 +69,7 @@ def main():
     parser.set_defaults(log_dir='log_save')
 
     parser.add_argument('--transfer-result-dir', dest='transfer_result_dir', type=str)
-    parser.set_defaults(model_save_dir='transfer_result_layertrans')
+    parser.set_defaults(transfer_result_dir='transfer_result_layertrans')
 
     # network
     parser.add_argument('--source', dest='source', type=str)
@@ -137,7 +137,7 @@ def main():
 
     # define vgg model
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    if args.source == 'syn':
+    if args.source == 'synthetic':
         Vgg = vgg19_bn(num_class=data_class).to(device)
         numbered_layer = {
             'features': ['0', '3', '7', '10', '14', '17', '20', '23', '27', '30', '33', '36', '40', '43', '46', '49'],
@@ -190,8 +190,8 @@ def main():
         optimizer = optim.SGD(para_optim, lr=args.lr, weight_decay=args.weight_decay, nesterov=True, momentum=0.9)
         scheduler = optim.lr_scheduler.MultiStepLR(optimizer, epoch_step, gamma=args.lr_drop_ratio)
 
-        if not os.path.exists(os.path.join(transfer_result_dir, data_name)):
-            os.mkdir(os.path.join(transfer_result_dir, data_name))
+        if not os.path.exists(os.path.join(transfer_result_dir_source, data_name)):
+            os.mkdir(os.path.join(transfer_result_dir_source, data_name))
 
         # load src's model params
         model_weight_path = os.path.join(prj_dir, args.model_weight_path)

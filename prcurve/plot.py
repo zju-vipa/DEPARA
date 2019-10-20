@@ -25,6 +25,9 @@ parser.set_defaults(style='seaborn')
 parser.add_argument('--dataset', dest='dataset', type=str)
 parser.set_defaults(dataset='taskonomy')
 
+parser.add_argument('--save-dir', dest='save_dir', type=str)
+parser.set_defaults(save_dir='result_save')
+
 args = parser.parse_args()
 
 
@@ -85,23 +88,25 @@ room_layout segment25d segment2d vanishing_point \
 segmentsemantic class_1000 class_places inpainting_whole'
 task_list = list_of_tasks.split(' ')
 
+prj_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+result_save = os.path.join(prj_dir, args.save_dir)
 
 affinity_gt = np.load('./sort_gt.npy')
 
 # node
-affinity = np.load('./affinity_taskonomy.npy')
-affinity_coco = np.load('./affinity_coco.npy')
-affinity_indoor = np.load('./affinity_indoor.npy')
+affinity = np.load(os.path.join(result_save, 'attribution', 'affinity_taskonomy.npy'))
+affinity_coco = np.load(os.path.join(result_save, 'attribution', 'affinity_coco.npy'))
+affinity_indoor = np.load(os.path.join(result_save, 'attribution', 'affinity_indoor.npy'))
 
 # edge
-affinity_edge = np.load('./edge_spearman_taskonomy.npy')
-affinity_edge_coco = np.load('./edge_spearman_coco.npy')
-affinity_edge_indoor = np.load('./edge_spearman_indoor.npy')
+affinity_edge = np.load(os.path.join(result_save, 'edge', 'edge_spearman_taskonomy.npy'))
+affinity_edge_coco = np.load(os.path.join(result_save, 'edge', 'edge_spearman_coco.npy'))
+affinity_edge_indoor = np.load(os.path.join(result_save, 'edge', 'edge_spearman_indoor.npy'))
 
 # rsa
-rsa_affinity = np.load('./rsa_taskonomy.npy')
-rsa_coco = np.load('./rsa_coco.npy')
-rsa_indoor = np.load('./rsa_indoor.npy')
+rsa_affinity = np.load(os.path.join(result_save, 'rsa', 'rsa_taskonomy.npy'))
+rsa_coco = np.load(os.path.join(result_save, 'rsa', 'rsa_coco.npy'))
+rsa_indoor = np.load(os.path.join(result_save, 'rsa', 'rsa_indoor.npy'))
 
 # preprocess delete row 7 & 19 
 affinity = preprocess(affinity)
@@ -115,7 +120,7 @@ affinity_edge = np.delete(affinity_edge, (7,19), axis=0)
 affinity_edge_coco = np.delete(affinity_edge_coco, (7,19), axis=0)
 affinity_edge_indoor = np.delete(affinity_edge_indoor, (7,19), axis=0)
 
-aff_dict = {'taskonomy': affinity, 'coco': affinity_coco, 'Indoor': affinity_indoor}
+aff_dict = {'taskonomy': affinity, 'coco': affinity_coco, 'indoor': affinity_indoor}
 pr_dict = {}
 
 # Get pr numerically

@@ -9,6 +9,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--feature-dir', dest='feature_dir', type=str)
 parser.set_defaults(feature_dir='feature')
 
+parser.add_argument('--save-dir', dest='save_dir', type=str)
+parser.set_defaults(save_dir='result_save')
+
 parser.add_argument('--dataset', dest='dataset', type=str)
 parser.set_defaults(dataset='coco')
 
@@ -48,7 +51,15 @@ if __name__ == '__main__':
 
     prj_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     directory_save = os.path.join(prj_dir, args.feature_dir, '{}_feature_1k'.format(args.dataset))
+    result_save = os.path.join(prj_dir, args.save_dir)
 
+    if not os.path.exists(result_save):
+        os.mkdir(result_save)
+    if not os.path.exists(os.path.join(result_save, 'edge')):
+        os.mkdir(os.path.join(result_save, 'edge'))
+    if not os.path.exists(os.path.join(result_save, 'rsa')):
+        os.mkdir(os.path.join(result_save, 'rsa'))
+       
     feature = np.load(os.path.join(directory_save, list_of_tasks[0], 'task_feature.npy'))
     feature_all = np.zeros((20, feature.shape[0]*(feature.shape[0]-1)//2))
     feature_all_correlation = np.zeros((20, feature.shape[0]*(feature.shape[0]-1)//2))
@@ -62,7 +73,7 @@ if __name__ == '__main__':
 
     spearman_20x20 = spearman_correlation(feature_all)
     spearman_20x20_correlation = spearman_correlation(feature_all_correlation)
-    np.save(os.path.join(prj_dir, 'prcurve', 'edge_spearman_{}.npy'.format(args.dataset)), spearman_20x20)
-    np.save(os.path.join(prj_dir, 'prcurve', 'rsa_{}.npy'.format(args.dataset)), spearman_20x20_correlation)
+    np.save(os.path.join(result_save, 'edge', 'edge_spearman_{}.npy'.format(args.dataset)), spearman_20x20)
+    np.save(os.path.join(result_save, 'rsa', 'rsa_{}.npy'.format(args.dataset)), spearman_20x20_correlation)
 
 

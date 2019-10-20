@@ -80,14 +80,15 @@ After splitting, the datasets should be arranged in the following format:
 
 ## Task Transferability
 
-We test Task Transferability on Taskonomy Models. For pre-trained models, testing images, please follow the instruction of [TransferabilityfromAttributionMaps](https://github.com/zju-vipa/TransferbilityFromAttributionMaps). Make sure to utilize those codes to generate each task's features and attribution maps. We also provide ready-made features in [GoogleDrive](https://drive.google.com/open?id=1lYJnVOb8GBZuMBePf50BTcQJoaGL5o_y).
+We test Task Transferability on Taskonomy Models. For pre-trained models, testing images, please follow the instruction of [TransferabilityfromAttributionMaps](https://github.com/zju-vipa/TransferbilityFromAttributionMaps). Make sure to utilize those codes to generate each task's features and attribution maps. We also provide ready-made [features](https://drive.google.com/open?id=1lYJnVOb8GBZuMBePf50BTcQJoaGL5o_y) and [attributions affinity](https://drive.google.com/open?id=1j42G90dD5NbPz9nACkUCtpHIIZ36SDMp) in GoogleDrive. Move [attributions affinity](https://drive.google.com/open?id=1j42G90dD5NbPz9nACkUCtpHIIZ36SDMp) to $result_save.
 
 Generate edges of the graph:
 
 ```
-python spearman_edge.py --feature-dir $FEATURE --dataset taskonomy 
-python spearman_edge.py --feature-dir $FEATURE --dataset coco
-python spearman_edge.py --feature-dir $FEATURE --dataset indoor
+cd tools
+python spearman_edge.py --feature-dir $FEATURE --save-dir result_save --dataset taskonomy 
+python spearman_edge.py --feature-dir $FEATURE --save-dir result_save --dataset coco
+python spearman_edge.py --feature-dir $FEATURE --save-dir result_save --dataset indoor
 ```
 
 #### Visualization
@@ -96,7 +97,7 @@ Plot *Precision&Recall* curve:
 
 ```
 cd $DIR/prcurve
-python plot.py --dataset taskonomy
+python plot.py --dataset taskonomy --save-dir result_save
 ```
 
 e.g.

@@ -106,7 +106,7 @@ def main():
     prj_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     log_dir = os.path.join(prj_dir, args.log_dir)
     model_save_dir = os.path.join(prj_dir, args.model_save_dir)
-    model_weight_path = os.path.join(prj_dir, args.model_weight_path)
+    
 
     if not os.path.exists(log_dir):
         os.mkdir(log_dir)
@@ -142,6 +142,7 @@ def main():
     scheduler = optim.lr_scheduler.StepLR(optimizer, args.lr_step_c, gamma=args.lr_drop_ratio)
 
     if args.model_weight_path is not None:
+        model_weight_path = os.path.join(prj_dir, args.model_weight_path)
         Vgg.load_state_dict(torch.load(model_weight_path))
         print('[*]Model loaded : ({})'.format(os.path.basename(model_weight_path)))
 

@@ -25,8 +25,8 @@ if not os.path.exists(save_dir):
 
 for i in range(len(data_name)):
 	dataset = data_name[i]
-	if not os.path.exists(os.path.join(save_dir + dataset)):
-		os.mkdir(os.path.join(save_dir + dataset))
+	if not os.path.exists(os.path.join(save_dir, dataset)):
+		os.mkdir(os.path.join(save_dir, dataset))
 	sel_num = 0
 	for mode in ['train']:
 		cate_list = glob.glob('./{}/{}/*'.format(dataset, mode))
@@ -43,7 +43,8 @@ for i in range(len(data_name)):
 			one_tenth_sel = len(img_list) // args.shrink_ratio
 			sel_num += one_tenth_sel
 			for k in range(one_tenth_sel):
-				picName = save_dir + dataset + '/' + mode + '/' + subfolder + '/' + os.path.basename(img_list[k])
+				#picName = save_dir + dataset + '/' + mode + '/' + subfolder + '/' + os.path.basename(img_list[k])
+				picName = os.path.join(save_dir, dataset, mode, subfolder, os.path.basename(img_list[k]))
 				os.system('cp {} {}'.format(img_list[k], picName))
 	print('{} train:{}'.format(dataset, sel_num))
 	os.system('cp -r {} {}'.format(os.path.join(prj_dir, 'syn2real-data', dataset, 'val'), os.path.join(save_dir, dataset)))
