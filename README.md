@@ -168,7 +168,7 @@ python vgg_layer_transfer.py --data-dir syn2real-data-hundredth --source Imagene
 
 #### Test Performance of DEPARA for Layer Selection
 
-Extract DEPARA from finetuned models(last layer and other conv-layers) with randomly selected 200 images from *part test*:
+Extract DEPARA from finetuned models(last layer and other conv-layers) with randomly selected 200 images from *part val*, you can also test on other images:
 
 ```
 python vgg_extract.py --target --imlist imlist_200.txt
