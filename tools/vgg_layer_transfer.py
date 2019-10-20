@@ -149,7 +149,7 @@ def main():
             conv_49 linear_1 linear_4'.split()
 
     elif args.source == 'Imagenet':
-        Vgg = models.vgg19(pretrained=True).to(device)
+        Vgg = vgg19_bn(num_class=data_class).to(device)
         numbered_layer = {
             'features': ['0', '3', '7', '10', '14', '17', '20', '23', '27', '30', '33', '36', '40', '43', '46', '49'],
             'classifier': ['0', '3']}
@@ -196,8 +196,11 @@ def main():
         # load src's model params
         model_weight_path = os.path.join(prj_dir, args.model_weight_path)
         if args.model_weight_path is not None:
-            pretrained_dict = torch.load(os.path.join(model_weight_path,
-                                                      'vgg19_bn_final.pt'))
+            if args.source == 'synthetic':
+                pretrained_dict = torch.load(os.path.join(model_weight_path,
+                                                        'vgg19_bn_final.pt'))
+            elif args.source == 'Imagenet':
+                pretrained_dict = models.vgg19_bn(pretrained=True).state_dict()
             model_dict = Vgg.state_dict()
             pretrained_dict_frozen = {}
             for k_, v_ in pretrained_dict.items():
