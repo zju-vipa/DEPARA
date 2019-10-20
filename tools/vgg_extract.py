@@ -7,7 +7,6 @@ import argparse
 
 from utils import *
 from vgg import *
-from model_wrn_mtan import *
 from vanilla_backprop import VanillaBackprop
 from torchvision import models
 from torchvision import transforms
@@ -133,8 +132,8 @@ def save(output, grad, edge, pretrained, numbered_layer):
         np.save(os.path.join(save_dir, 'feature_{}'.format(pretrained),
                              'feature_linear_{}.npy'.format(numbered_layer['classifier'][ind])),
                               output[len(numbered_layer['feature']) + ind])
-        np.save(os.path.join(save_dir, 'attributionMap_{}'.format(pretrained),
-                             'attribution_linear_{}.npy'.format(numbered_layer['classifier'][ind])),
+        np.save(os.path.join(save_dir, 'node_{}'.format(pretrained),
+                             'node_linear_{}.npy'.format(numbered_layer['classifier'][ind])),
                               grad[len(numbered_layer['feature']) + ind])
         np.save(os.path.join(save_dir, 'edge_{}'.format(pretrained),
                              'edge_linear_{}.npy'.format(numbered_layer['classifier'][ind])),
@@ -153,8 +152,8 @@ if __name__ == '__main__':
 
     imgs = None
     for i in range(200):
-        print(i, ' image')
-        img = Image.open(os.path.join(data_dir, 'test', img_list[i])).convert('RGB')
+        # print(i, ' image')
+        img = Image.open(os.path.join(data_dir, 'test200', img_list[i])).convert('RGB')
         if imgs is None:
             imgs = data_transform(img)
         else:
@@ -166,7 +165,10 @@ if __name__ == '__main__':
 
     # load model
     Vgg = vgg19_bn(num_class=12).to(device)
-    Vgg.load_state_dict(torch.load(os.path.join(args.model_weight_path, 'synthetic', 'vgg19_bn_final.pt')))
+    if args.target:
+        Vgg.load_state_dict(torch.load(os.path.join(prj_dir, args.model_weight_path, 'mscoco', 'vgg19_bn_final.pt')))
+    else:
+        Vgg.load_state_dict(torch.load(os.path.join(prj_dir, args.model_weight_path, 'synthetic', 'vgg19_bn_final.pt')))
     Vgg.eval()
 
     Vgg_imagenet = models.vgg19_bn(pretrained=True).to(device)
@@ -198,7 +200,7 @@ if __name__ == '__main__':
             output_list_imagenet = output_imagenet
             grad_list_imagenet = grad_imagenet
             continue
-        for j in range(len(img_list)//batch_size-1):
+        for j in range(list_length):
             output_list[j] = np.concatenate((output_list[j], output[j]), axis=0)
             grad_list[j] = np.concatenate((grad_list[j], grad[j]), axis=0)
             output_list_imagenet[j] = np.concatenate((output_list_imagenet[j], output_imagenet[j]), axis=0)
@@ -215,6 +217,9 @@ if __name__ == '__main__':
     if args.target:
         numbered_layer['classifier'] = target_layer
         numbered_layer_imagenet['classifier'] = target_layer
+        numbered_layer['feature'] = []
+        numbered_layer_imagenet['feature'] = []
+        
     save(output_list, grad_list, edge_list, 'source', numbered_layer)
     save(output_list_imagenet, grad_list_imagenet, edge_list_imagenet, 'imagenet', numbered_layer_imagenet)
 

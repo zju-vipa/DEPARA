@@ -61,7 +61,7 @@ if args.source == 'source':
     conv_40 conv_43 conv_46 \
     conv_49 linear_1 linear_4 linear_6'.split()
 elif args.source == 'imagenet':
-    list_of_layer_imagenet = 'conv_0 conv_3 conv_7 conv_10 \
+    list_of_layer = 'conv_0 conv_3 conv_7 conv_10 \
     conv_14 conv_17 conv_20 conv_23 \
     conv_27 conv_30 conv_33 conv_36 \
     conv_40 conv_43 conv_46 \
@@ -75,9 +75,10 @@ prj_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 dag_dir = os.path.join(prj_dir, args.dag_dir)
 
 '''edge'''
-target_feature = np.load(os.path.join(dag_dir, 'feature_{}'.format(args.source), 'feature_{}.npy'.format(target_layer)))
+target_feature = np.load(os.path.join(dag_dir, 'feature_{}'.format(args.source), 'feature_linear_{}.npy'.format(target_layer)))
 target_feature = target_feature.reshape((target_feature.shape[0], -1))
 target_edge = 1 - pdist(target_feature, 'cosine')
+
 
 edge_list_vec = np.zeros((len(list_of_layer), 19900))
 print('Edge:')
@@ -91,12 +92,12 @@ for i, layer in enumerate(list_of_layer):
 
 
 '''node'''
-target_attribution = np.load(os.path.join(dag_dir, 'attributionMap_{}'.format(args.source), 'attribution_{}.npy'.format(target_layer)))
+target_attribution = np.load(os.path.join(dag_dir, 'node_{}'.format(args.source), 'node_linear_{}.npy'.format(target_layer)))
 target_attribution = np.abs(target_attribution).mean(axis=1).reshape((target_attribution.shape[0], -1))
 
 print('Node:')
 for i, layer in enumerate(list_of_layer):
-    a = np.load(os.path.join(dag_dir, 'attributionMap_{}'.format(args.source), 'attribution_{}.npy'.format(layer)))
+    a = np.load(os.path.join(dag_dir, 'node_{}'.format(args.source), 'node_{}.npy'.format(layer)))
     a = np.abs(a).mean(axis=1).reshape((a.shape[0], -1))
     #a = a.mean(axis=1).reshape((a.shape[0], -1))
     sim = 0
